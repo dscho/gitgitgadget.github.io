@@ -12,4 +12,18 @@
     {{ .Content }}
     {{ end }}
   </body>
+{{- if .Store.Get "hasGraphviz" }}
+  <script src="{{ relURL "js/viz-global.js" }}"> </script>
+  <script type="text/javascript">
+    window.addEventListener("DOMContentLoaded", async () => {
+      for (const x of [...document.querySelectorAll("pre[class=graphviz]")]) {
+        if (x.style.display === 'none') return
+        const engine = x.getAttribute('engine') || 'dot'
+        const svg = (await Viz.instance()).renderSVGElement(x.innerText, { engine })
+        x.parentNode.insertBefore(svg, x)
+        x.style.display = 'none'
+      }
+    })
+  </script>
+{{- end }}
 </html>
