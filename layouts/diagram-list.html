@@ -1,0 +1,7 @@
+<pre>
+{{- range .Site.RegularPages -}}
+  {{- if in .RawContent "```graphviz" -}}
+    public{{ .Path }}.html
+  {{- end }}
+{{ end -}}
+</pre>
